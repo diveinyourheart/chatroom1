@@ -54,6 +54,7 @@ func main() {
 			utils.Log("listen.Accept err=%v", err)
 			continue
 		}
-		go process(conn)
+		tlsConn := tls.Server(conn, config)
+		go process(tlsConn)
 	}
 }
