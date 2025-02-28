@@ -2,11 +2,11 @@ package utils
 
 import (
 	"chatroom/common/message"
+	"crypto/tls"
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
 	"io"
-	"net"
 )
 
 const (
@@ -23,7 +23,7 @@ var (
 )
 
 type Transfer struct {
-	Conn net.Conn
+	Conn *tls.Conn
 	Buf  [8096]byte //传输时使用的缓冲
 }
 

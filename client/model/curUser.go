@@ -2,7 +2,7 @@ package model
 
 import (
 	"chatroom/common/message"
-	"net"
+	"crypto/tls"
 )
 
 var (
@@ -10,6 +10,6 @@ var (
 )
 
 type CurUser struct {
-	Conn net.Conn
+	Conn *tls.Conn
 	Usr  message.User
 }

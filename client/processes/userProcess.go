@@ -4,9 +4,9 @@ import (
 	"chatroom/client/model"
 	"chatroom/client/utils"
 	"chatroom/common/message"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
-	"net"
 	"time"
 )
 
@@ -338,7 +338,7 @@ func (up *UserProcess) sendAddFriendRequest(userId int, note string) (err error)
 }
 
 func (up *UserProcess) Register(userId int, userPwd string, userName string) (err error) {
-	conn, err := net.Dial("tcp", SERVER_IPv4_ADDRESS)
+	conn, err := tls.Dial("tcp", SERVER_IPv4_ADDRESS, &tls.Config{})
 	if err != nil {
 		return fmt.Errorf("连接服务器失败: %v", err)
 	}
@@ -388,9 +388,9 @@ func (up *UserProcess) Register(userId int, userPwd string, userName string) (er
 }
 
 // 完成登录功能
-func (up *UserProcess) Login(userId int, userPwd string) (conn net.Conn, er error) {
+func (up *UserProcess) Login(userId int, userPwd string) (conn *tls.Conn, er error) {
 	// 1. 连接到服务器
-	conn, err := net.Dial("tcp", SERVER_IPv4_ADDRESS)
+	conn, err := tls.Dial("tcp", SERVER_IPv4_ADDRESS, &tls.Config{})
 	if err != nil {
 		er = fmt.Errorf("连接服务器失败: %v", err)
 		return

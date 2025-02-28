@@ -4,15 +4,15 @@ import (
 	"chatroom/client/model"
 	"chatroom/client/utils"
 	"chatroom/common/message"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
-	"net"
 	"os"
 	"sync"
 )
 
 var (
-	SERVER_IPv4_ADDRESS      string = "0.0.0.0:8889"
+	SERVER_IPv4_ADDRESS      string = "127.0.0.1:8889"
 	logOutChan                      = make(chan struct{}, 3)
 	blockShowMenuChan               = make(chan struct{})
 	gCMesRealTimeDisplayChan        = make(chan struct{}, 1)
@@ -193,7 +193,7 @@ func ShowMenu(wg *sync.WaitGroup) {
 	}
 }
 
-func ProcessServerMes(conn net.Conn, wg *sync.WaitGroup) {
+func ProcessServerMes(conn *tls.Conn, wg *sync.WaitGroup) {
 	defer wg.Done()
 	//创建一个transfer实例，不停的读取服务器发送的消息
 	tf := utils.Transfer{
